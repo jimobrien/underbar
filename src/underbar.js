@@ -217,6 +217,7 @@ var _ = {};
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
     var allPass = true;
+
     if (!iterator) {
       iterator = function () { return true; };
     } 
@@ -232,10 +233,29 @@ var _ = {};
     return allPass;
   };
 
+
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    var some = false;
+
+    if (!iterator) {
+      iterator = function() { return true; };
+    }
+
+    if (!collection || collection.length === 0) {
+      return false;
+    }
+
+    _.every(collection, function(item) {
+      if (iterator(item)) {
+        some = true;
+      }
+    });
+
+    return some;
+
   };
 
 
