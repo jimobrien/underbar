@@ -364,7 +364,6 @@ var _ = {};
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
-
     var args = [].slice.call(arguments, 2); //remove the first two args, "func" and "wait"
     
     setTimeout( function() {
@@ -385,6 +384,27 @@ var _ = {};
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    var shuffled = [].slice.call(array, 0); // clone the array
+    var selected;
+    var randomEl;
+
+
+    for (var i = 0, len = array.length; i < len; i++) {
+      // generate a random element index
+      randomEl = Math.floor(Math.random() * i);
+
+      // BEGIN: swap two values
+      // store a reference to the selected element in the shuffled array
+      selected = shuffled[randomEl];
+
+      // set the selected element to a new value using the current index (i)
+      shuffled[randomEl] = shuffled[i];
+
+      // set the value of the current index to the referenced element stored "selected" variable
+      shuffled[i] = selected;
+    }
+
+    return shuffled;
   };
 
 
