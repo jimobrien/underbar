@@ -104,6 +104,16 @@ var _ = {};
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+    var matches = _.filter(collection, test);
+    var rejects = [];
+
+    _.each(collection, function(item) {
+      if (_.indexOf(matches, item) === -1) {
+        rejects.push(item);
+      }
+    });
+
+    return rejects;
   };
 
   // Produce a duplicate-free version of the array.
