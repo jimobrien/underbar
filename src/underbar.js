@@ -346,6 +346,15 @@ var _ = {};
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    var cache = {};
+
+    return function(arg) {
+      if (!cache.hasOwnProperty(arg)) {
+        cache[arg] = func(arg);
+      } 
+      
+      return cache[arg];
+    };
   };
 
   // Delays a function for the given number of milliseconds, and then calls
