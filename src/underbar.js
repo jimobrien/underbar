@@ -67,8 +67,8 @@ var _ = {};
     // it uses the iteration helper `each`, which you will need to write.
     var result = -1;
 
-    _.each(array, function (item, index) {
-      if (item === target && result === -1) {
+    _.each( array, function (item, index) {
+      if ( item === target && result === -1 ) {
         result = index;
       }
     });
@@ -78,44 +78,42 @@ var _ = {};
 
   // Return all elements of an array that pass a truth test.
   _.filter = function (collection, test) {
-    var truthful = [];
+    var result = [];
 
-    _.each(collection, function (item) {
-      if (test(item)) {
-        truthful.push(item);
+    _.each( collection, function (value) {
+      if (  test(value) ){
+        result.push(value);
       }
     });
 
-    return truthful;
+    return result;
   };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function (collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
-    var matches = _.filter(collection, test);
-    var rejects = [];
-
-    _.each(collection, function (item) {
-      if (_.indexOf(matches, item) === -1) {
-        rejects.push(item);
-      }
+    return _.filter( collection, function (value) {
+      return !test(value);
     });
-
-    return rejects;
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function (array) {
-    var uniq = [];
+    var unique = {};
+    var result = [];
 
-    _.each(array, function (item) {
-      if (_.indexOf(uniq, item) === -1) {
-        uniq.push(item);
-      }
-    });
+    // iterate over the original array
+    for (var i = 0; i < array.length; i++ ) {
+      // push unique items into the new array
+      unique[array[i]] = array[i];
+    }
 
-    return uniq;
+    for (var key in unique ) {
+      result.push(unique[key]);
+    }
+
+    return result;
   };
 
 
@@ -124,13 +122,13 @@ var _ = {};
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
-    var results = [];
+    var result = [];
 
-    _.each(collection, function (item) {
-      results.push(iterator(item));
+    _.each( collection, function (value, key, collection) {
+      result.push( iterator(value, key, collection) );
     });
 
-    return results;
+    return result;
   };
 
   /*
@@ -146,7 +144,7 @@ var _ = {};
     // TIP: map is really handy when you want to transform an array of
     // values into a new array of values. _.pluck() is solved for you
     // as an example of this.
-    return _.map(collection, function (item) {
+    return _.map( collection, function (item) {
       return item[key];
     });
   };
@@ -159,7 +157,7 @@ var _ = {};
       if (item[functionOrKey]) {
         results.push(item[functionOrKey](args));
       } else if (typeof functionOrKey === 'function') {
-        results.push(functionOrKey.apply(item, args));
+        results.push( functionOrKey.apply(item, args) );
       }
     });
 
@@ -182,7 +180,7 @@ var _ = {};
   _.reduce = function (collection, iterator, accumulator) {
     accumulator = accumulator === undefined ? collection[0] : accumulator;
 
-    _.each(collection, function (item, index) {
+    _.each( collection, function (item, index) {
       accumulator = iterator(accumulator, item);
     });
 
@@ -193,8 +191,8 @@ var _ = {};
   _.contains = function (collection, target) {
     // TIP: Many iteration problems can be most easily expressed in
     // terms of reduce(). Here's a freebie to demonstrate!
-    return _.reduce(collection, function (wasFound, item) {
-      if (wasFound) {
+    return _.reduce( collection, function (wasFound, item) {
+      if ( wasFound ) {
         return true;
       }
       return item === target;
@@ -286,7 +284,7 @@ var _ = {};
     _.each(arguments, function (item) {
       if (typeof item === 'object') {
         _.each(item, function (val, prop) {
-          if(!obj.hasOwnProperty(prop)) {
+          if ( !obj.hasOwnProperty(prop) ) {
             obj[prop] = val;
           }
         });
@@ -338,7 +336,7 @@ var _ = {};
     var cache = {};
 
     return function (arg) {
-      if (!cache.hasOwnProperty(arg)) {
+      if (!cache.hasOwnProperty(arg) ) {
         cache[arg] = func(arg);
       } 
       
@@ -455,7 +453,7 @@ var _ = {};
     result = result || [];
 
     _.each(nestedArray, function (item, i) {
-      if (Array.isArray(item)) {
+      if (Array.isArray(item) ) {
         _.flatten(item, result);
       } else {
         result.push(item);
